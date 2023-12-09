@@ -1,0 +1,117 @@
+<!-- edit_patient.html -->
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>修改病患資料</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="input-container">
+            <label for="patient-name">病患名稱:</label>
+            <input type="text" id="patient-name" name="patient_name" class="input-field" value="{{ patient.patientname }}" autocomplete="off">
+        </div>
+
+        <div class="input-container">
+            <label for="id-num">身分證字號:</label>
+            <input type="text" id="id-num" name="id_num" class="input-field" value="{{ patient.id_num }}" autocomplete="off">
+        </div>
+        <div class="input-container">
+            <label for="birth-date">生日:</label>
+            <input type="text" id="birth-date" name="birth_date" class="input-field" value="{{ patient.birth_date }}" autocomplete="off">
+        </div>
+        <div class="input-container">
+            <label for="phone">電話號碼:</label>
+            <input type="text" id="phone" name="phone" class="input-field" value="{{ patient.phone }}" autocomplete="off">
+        </div>
+        <div class="input-container">
+            <label for="e_mail">e mail:</label>
+            <input type="text" id="e_mail" name="e_mail" class="input-field" value="{{ patient.e_mail }}" autocomplete="off">
+        </div>
+        <div class="input-container">
+            <label for="address">地址:</label>
+            <input type="text" id="address" name="address" class="input-field" value="{{ patient.address }}" autocomplete="off">
+        </div>
+        <div class="input-container">
+            <label for="address">性別:</label>
+            <input type="text" id="address" name="address" class="input-field" value="{{ patient.gender }}" autocomplete="off">
+        </div>
+        <!-- 添加其他表单字段以编辑其他患者信息 -->
+        <div style="display: inline-block; margin-left: 20px;">
+            <button type="submit"  class="btn btn-primary">儲存</button>
+        </div>
+
+        <div style="display: inline-block; margin-left: 20px;">
+            <a href="{% url 'patient_list' %}" class="btn btn-primary">返回</a>
+        </div>
+        <div style="display: inline-block; margin-left: 20px;">
+            <button type="button" class="btn btn-danger" onclick="deletePatient()">
+                删除
+            </button>
+        </div>
+    </form>
+<!-- 确认删除的模态框 -->
+
+<!-- <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteLabel">确认删除</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                确定要删除患者吗？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <a href="{% url 'delete_patient' patient.id %}" class="btn btn-danger">确认删除</a>
+            </div>
+        </div>
+    </div>
+</div> -->
+<style>
+    /* 在你的CSS文件中 */
+    .input-field {
+        border: 1px solid #000;
+        padding: 4px;
+    }
+
+    /* 设置光标样式 */
+    .input-field:focus {
+        outline: none; /* 移除默认的外框样式 */
+        border: 1px solid #000; /* 设置输入框的边框 */
+        caret-color: #000; /* 设置光标颜色 */
+    }
+
+    .input-field {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .input-field label {
+        width: 120px; /* 设置标签宽度 */
+        margin-right: 10px; /* 设置标签和输入框之间的间距 */
+    }
+
+    .input-field input {
+        flex: 1; /* 使用 flex 属性将输入框填充剩余的可用空间 */
+    }
+
+</style>
+<script>
+    function deletePatient() {
+        // 获取表单中的患者 ID
+        var patientId = '{{ patient.id }}';
+
+        // 构建删除患者的 URL
+        var deleteUrl = '{% url "delete_patient" 0 %}'.replace('0', patientId);
+
+        // 执行删除操作
+        window.location.href = deleteUrl;
+    }
+</script>
+{% endblock %}

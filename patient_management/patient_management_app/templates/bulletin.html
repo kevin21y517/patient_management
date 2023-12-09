@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: inline-block;">
+    <h1>公告</h1>
+</div>
+    <div style="display: inline-block; margin-left: 20px; ">
+        <a href="{% url 'add_bulletin' %}" class="btn btn-primary" style="margin-top: -10px !important;">新增公告</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="header-cell">標題</th>
+                <th class="header-cell">內容</th>
+                <th class="header-cell">發布人</th>
+                <th class="header-cell">科室</th>
+                <th class="header-cell">發布時間</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bulletin in bulletins %}
+            <tr>
+                <td class="edit-bulletin unselectable" data-id="{{ bulletin.id }}">{{ bulletin.title }}</td>
+                <td class="edit-bulletin unselectable" data-id="{{ bulletin.id }}">{{ bulletin.content }}</td>
+                <td class="edit-bulletin unselectable" data-id="{{ bulletin.id }}">{{ bulletin.staff.s_c_name }}</td>
+                <td class="edit-bulletin unselectable" data-id="{{ bulletin.id }}">
+                    {% if bulletin.dept.id == 1 %}
+                    內科部
+                    {% elif bulletin.dept.id == 2 %}
+                    小兒部
+                    {% elif bulletin.dept.id == 3 %}
+                    神經部
+                    {% elif bulletin.dept.id == 4 %}
+                    精神醫學部
+                    {% elif bulletin.dept.id == 5 %}
+                    復健部
+                    {% elif bulletin.dept.id == 6 %}
+                    家庭醫學部
+                    {% elif bulletin.dept.id == 7 %}
+                    腫瘤醫學部
+                    {% elif bulletin.dept.id == 8 %}
+                    基因醫學部
+                    {% elif bulletin.dept.id == 9 %}
+                    環境及職業醫學部
+                    {% elif bulletin.dept.id == 10 %}
+                    老年醫學部
+                    {% elif bulletin.dept.id == 11 %}
+                    外科部
+                    {% elif bulletin.dept.id == 12 %}
+                    骨科部
+                    {% elif bulletin.dept.id == 13 %}
+                    婦產部
+                    {% elif bulletin.dept.id == 14 %}
+                    耳鼻喉部
+                    {% elif bulletin.dept.id == 15 %}
+                    眼科部
+                    {% elif bulletin.dept.id == 16 %}
+                    泌尿部
+                    {% elif bulletin.dept.id == 17 %}
+                    皮膚部
+                    {% elif bulletin.dept.id == 18 %}
+                    牙科部
+                    {% elif bulletin.dept.id == 19 %}
+                    麻醉部
+                    {% elif bulletin.dept.id == 20 %}
+                    創傷醫學部
+                    {% elif bulletin.dept.id == 21 %}
+                    急診醫學部
+                    {% elif bulletin.dept.id == 22 %}
+                    病理部
+                    {% elif bulletin.dept.id == 23 %}
+                    檢驗醫學部
+                    {% elif bulletin.dept.id == 24 %}
+                    影像醫學部
+                    {% elif bulletin.dept.id == 25 %}
+                    核子醫學部
+                    {% elif bulletin.dept.id == 26 %}
+                    綜合診療部
+                    {% elif bulletin.dept.id == 27 %}
+                    資訊部
+                    {% endif %}
+                </td>
+                <td class="edit-bulletin unselectable" data-id="{{ bulletin.id }}">{{ bulletin.date }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="12">No bulletins found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .bulletin-container {
+        margin: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th.header-cell, td.bulletin-field {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    td[colspan="3"] {
+        text-align: center;
+        font-style: italic;
+    }
+    /* 添加鼠标悬停效果 */
+    .edit-bulletin:hover {
+        background-color: #f2f2f2;
+    }
+
+    /* 在鼠标移到表格单元格上时将指针样式更改为默认样式 */
+    .edit-bulletin:hover {
+        cursor: default;
+    }
+
+    /* 在鼠标移到表格标题上时将指针样式更改为默认样式 */
+    th:hover {
+        cursor: default;
+    }
+    /* 添加样式以禁止选择文本 */
+    .unselectable {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+</style>
+<script>
+    document.querySelectorAll('.edit-bulletin').forEach(cell => {
+        cell.addEventListener('dblclick', () => {
+            const id = cell.getAttribute('data-id');
+            window.location.href = `/edit_bulletin/${id}/`;
+        });
+    });
+</script>
+{% endblock %}

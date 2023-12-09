@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: inline-block;">
+    <h1>工作人員</h1>
+</div>
+<div style="display: inline-block; margin-left: 20px; ">
+    <a href="{% url 'add_staff' %}" class="btn btn-primary" style="margin-top: -10px !important;">新增工作人員</a>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="header-cell">使用者ID</th>
+            <th class="header-cell">中文名稱</th>
+            <th class="header-cell">英文名稱</th>
+            <th class="header-cell">職位</th>
+            <th class="header-cell">科室</th>
+            <th class="header-cell">帳號</th>
+            <th class="header-cell">密碼</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for staff in staffs %}
+        <tr>
+            <td class="edit-staff unselectable" data-id="{{ staff.id }}">{{ staff.user_id }}</td>
+            <td class="edit-staff unselectable" data-id="{{ staff.id }}">{{ staff.s_c_name }}</td>
+            <td class="edit-staff unselectable" data-id="{{ staff.id }}">{{ staff.s_e_name }}</td>
+            <td class="edit-staff unselectable" data-id="{{ staff.id }}">{{ staff.position }}</td>
+            <td class="edit-staff unselectable" data-id="{{ staff.id }}">
+                {% if staff.dept.id == 1 %}
+                內科部
+                {% elif staff.dept.id == 2 %}
+                小兒部
+                {% elif staff.dept.id == 3 %}
+                神經部
+                {% elif staff.dept.id == 4 %}
+                精神醫學部
+                {% elif staff.dept.id == 5 %}
+                復健部
+                {% elif staff.dept.id == 6 %}
+                家庭醫學部
+                {% elif staff.dept.id == 7 %}
+                腫瘤醫學部
+                {% elif staff.dept.id == 8 %}
+                基因醫學部
+                {% elif staff.dept.id == 9 %}
+                環境及職業醫學部
+                {% elif staff.dept.id == 10 %}
+                老年醫學部
+                {% elif staff.dept.id == 11 %}
+                外科部
+                {% elif staff.dept.id == 12 %}
+                骨科部
+                {% elif staff.dept.id == 13 %}
+                婦產部
+                {% elif staff.dept.id == 14 %}
+                耳鼻喉部
+                {% elif staff.dept.id == 15 %}
+                眼科部
+                {% elif staff.dept.id == 16 %}
+                泌尿部
+                {% elif staff.dept.id == 17 %}
+                皮膚部
+                {% elif staff.dept.id == 18 %}
+                牙科部
+                {% elif staff.dept.id == 19 %}
+                麻醉部
+                {% elif staff.dept.id == 20 %}
+                創傷醫學部
+                {% elif staff.dept.id == 21 %}
+                急診醫學部
+                {% elif staff.dept.id == 22 %}
+                病理部
+                {% elif staff.dept.id == 23 %}
+                檢驗醫學部
+                {% elif staff.dept.id == 24 %}
+                影像醫學部
+                {% elif staff.dept.id == 25 %}
+                核子醫學部
+                {% elif staff.dept.id == 26 %}
+                綜合診療部
+                {% elif staff.dept.id == 27 %}
+                資訊部
+                {% endif %}
+            </td>
+
+            <td class="edit-staff unselectable" data-id="{{ staff.id }}">{{ staff.username }}</td>
+            <td class="edit-staff unselectable" data-id="{{ staff.id }}">{{ staff.password }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="12">No staff found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<style>
+    /* 添加边框样式 */
+    .header-cell, .edit-staff {
+        border: 1px solid #000;
+        padding: 4px; /* 添加一些内边距以提高可读性 */
+    }
+
+    /* 添加鼠标悬停效果 */
+    .edit-staff:hover {
+        background-color: #f2f2f2;
+    }
+
+    /* 在鼠标移到表格单元格上时将指针样式更改为默认样式 */
+    .edit-staff:hover {
+        cursor: default;
+    }
+
+    /* 隐藏表格单元格中的文本选择 */
+    .unselectable {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    </style>
+    <script>
+        document.querySelectorAll('.edit-staff').forEach(cell => {
+            cell.addEventListener('dblclick', () => {
+                const id = cell.getAttribute('data-id');
+                window.location.href = `/edit_staff/${id}/`;
+            });
+        });
+    </script>
+{% endblock %}

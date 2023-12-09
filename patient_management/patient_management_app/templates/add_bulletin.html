@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: inline-block;">
+    <h1>新增公告</h1>
+</div>
+<form method="post">
+    {% csrf_token %}
+    <div class="input-container">
+        <label for="title">標題:</label>
+        <input type="text" id="title" name="title" class="input-field" value="{{ bulletin.title }}" autocomplete="off">
+    </div>
+    <div class="input-container">
+        <label for="content">內容:</label>
+        <input type="text" id="content" name="content" class="input-field" value="{{ bulletin.content }}" autocomplete="off">
+    </div>
+    <div class="input-container">
+        <label for="staff">發布人:</label>
+        <input type="text" id="staff" name="staff" class="input-field" value="{{ bulletin.staff }}" autocomplete="off">
+    </div>
+    <div class="input-container">
+        <label for="dept">科室:</label>
+        <input type="text" id="dept" name="dept" class="input-field" value="{{ bulletin.dept }}" autocomplete="off">
+    </div>
+    <div style="display: inline-block; margin-left: 20px;">
+        <button type="submit"  class="btn btn-primary">儲存</button>
+    </div>
+    <div style="display: inline-block; margin-left: 20px;">
+        <a href="{% url 'home' %}" class="btn btn-primary">返回</a>
+    </div>
+</form>
+<style>
+    /* 在你的CSS文件中 */
+    .input-field {
+        border: 1px solid #000;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    /* 设置光标样式 */
+    .input-field:focus {
+        outline: none; /* 移除默认的外框样式 */
+        border: 1px solid #000; /* 设置输入框的边框 */
+        caret-color: #000; /* 设置光标颜色 */
+    }
+
+    .input-field label {
+        /* 设置标签的宽度 */
+        width: 100px;
+        /* 设置标签的文本对齐方式 */
+        text-align: right;
+        /* 设置标签的内边距 */
+        padding-right: 10px;
+    }
+
+    .input-container {
+        /* 设置容器的宽度 */
+        width: 500px;
+    }
+</style>
+{% endblock %}

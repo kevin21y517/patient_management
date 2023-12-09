@@ -1,0 +1,91 @@
+<!-- patient_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: inline-block;">
+    <h1>病患</h1>
+</div>
+<div style="display: inline-block; margin-left: 20px; ">
+    <a href="{% url 'add_patient' %}" class="btn btn-primary" style="margin-top: -10px !important;">新增患者</a>
+</div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="header-cell">病患名稱</th>
+                <th class="header-cell">身分證字號</th>
+                <th class="header-cell">生日</th>
+                <th class="header-cell">血型</th>
+                <th class="header-cell">電話號碼</th>
+                <th class="header-cell">e_mail</th>
+                <th class="header-cell">地址</th>
+                <th class="header-cell">性別</th>
+                <!-- 添加其他表头 -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patients %}
+                <tr>
+                    <td class="edit-patient unselectable" data-id="{{ patient.id }}">{{ patient.patientname }}</td>
+                    <td class="edit-patient unselectable" data-id="{{ patient.id }}">{{ patient.id_num }}</td>
+                    <td class="edit-patient unselectable" data-id="{{ patient.id }}">{{ patient.birth_date }}</td>
+                    <td class="edit-patient unselectable" data-id="{{ patient.id }}">{{ patient.blood_type }}</td>
+                    <td class="edit-patient unselectable" data-id="{{ patient.id }}">{{ patient.phone }}</td>
+                    <td class="edit-patient unselectable" data-id="{{ patient.id }}">{{ patient.e_mail }}</td>
+                    <td class="edit-patient unselectable" data-id="{{ patient.id }}">{{ patient.address }}</td>
+                    <td class="edit-patient unselectable" data-id="{{ patient.id }}">
+                        {% if patient.gender == 0 %}
+                            Male
+                        {% elif patient.gender == 1 %}
+                            Female
+                        {% else %}
+                            Other
+                        {% endif %}
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="12">No patients found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <style>
+        /* 添加边框样式 */
+        .header-cell, .edit-patient {
+            border: 1px solid #000;
+            padding: 4px; /* 添加一些内边距以提高可读性 */
+        }
+
+        /* 添加鼠标悬停效果 */
+        .edit-patient:hover {
+            background-color: #f2f2f2;
+        }
+
+        /* 在鼠标移到表格单元格上时将指针样式更改为默认样式 */
+        .edit-patient:hover {
+            cursor: default;
+        }
+
+        /* 在鼠标移到表格标题上时将指针样式更改为默认样式 */
+        th:hover {
+            cursor: default;
+        }
+        /* 添加样式以禁止选择文本 */
+        .unselectable {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+    <script>
+        document.querySelectorAll('.edit-patient').forEach(cell => {
+            cell.addEventListener('dblclick', () => {
+                const id = cell.getAttribute('data-id');
+                window.location.href = `/edit_patient/${id}/`;
+            });
+        });
+    </script>
+
+
+{% endblock %}

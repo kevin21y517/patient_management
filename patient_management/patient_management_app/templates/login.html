@@ -1,0 +1,39 @@
+<!-- login.html -->
+
+<style>
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    form {
+        text-align: center;
+    }
+
+    div {
+        margin-bottom: 15px;  /* 调整每个 div 之间的底部间距 */
+    }
+
+    label {
+        margin-right: 15px;  /* 调整 label 和 input 之间的右侧间距 */
+    }
+</style>
+
+<form method="post" action="{% url 'login_view' %}">
+    {% csrf_token %}
+    <h2>Login</h2>
+    <div>
+    <label for="id_username">Username:</label>
+    <input type="text" name="username" required>
+    </div>
+    <div>
+    <label for="id_password">Password:</label>
+    <input type="password" name="password" required>
+    </div>
+    <div>
+    <button type="submit">Login</button>
+    </div>
+</form>
